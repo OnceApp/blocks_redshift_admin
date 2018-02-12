@@ -128,7 +128,7 @@
     filters:
       redshift_plan_steps.network_distribution_type: DS^_DIST^_OUTER,DS^_DIST^_ALL^_INNER,DS^_DIST^_BOTH,DS^_BCAST^_INNER
       redshift_plan_steps.operation: "%Join%"
-      redshift_queries.substring: "-%redshift_model%,-%reshift_db_space%"
+      redshift_queries.substring: "-%redshift_model%,-%redshift_db_space%"
     sorts: [redshift_queries.total_time_executing desc]
     limit: '50'
     column_limit: '50'
