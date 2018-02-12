@@ -96,6 +96,7 @@
     measures: [redshift_queries.total_time_executing]
     filters:
       redshift_plan_steps.operation: "%Join%"
+      redshift_queries.substring: "-%redshift_model%,-%redshift_db_space%"
     sorts: [redshift_queries.total_time_executing desc]
     limit: '500'
     column_limit: '50'
@@ -126,7 +127,7 @@
     dimensions: [redshift_plan_steps.network_distribution_type, redshift_plan_steps.operation_argument]
     measures: [redshift_queries.count, redshift_queries.total_time_executing, redshift_queries.time_executing_per_query]
     filters:
-      redshift_plan_steps.network_distribution_type: DS^_DIST^_OUTER,DS^_DIST^_ALL^_INNER,DS^_DIST^_BOTH,DS^_BCAST^_INNER
+      #redshift_plan_steps.network_distribution_type: DS^_DIST^_OUTER,DS^_DIST^_ALL^_INNER,DS^_DIST^_BOTH,DS^_BCAST^_INNER
       redshift_plan_steps.operation: "%Join%"
       redshift_queries.substring: "-%redshift_model%,-%redshift_db_space%"
     sorts: [redshift_queries.total_time_executing desc]
