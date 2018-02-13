@@ -12,8 +12,11 @@
 
     - elements: [capacity_header]
       height: 100
+    - elements: [queries_and_queued_per_day]
+      height: 300
     - elements: [queries_and_queued_per_hour]
       height: 300
+
 
 
   #filters:
@@ -219,3 +222,69 @@
       minutes_queued: "#e0bc5e"
       redshift_queries.count: "#2f24b5"
       redshift_queries.count_of_queued: "#d10c04"
+
+  - name: queries_and_queued_per_day
+    title: Queries submitted & queued by day
+    model: redshift_model
+    explore: redshift_queries
+    type: looker_column
+    fields: [redshift_queries.count, redshift_queries.count_of_queued, redshift_queries.percent_queued,
+      redshift_queries.total_time_in_queue, redshift_queries.start_date]
+    fill_fields: [redshift_queries.start_date]
+    sorts: [redshift_queries.start_date]
+    limit: 500
+    column_limit: 50
+    dynamic_fields:
+    - table_calculation: minutes_queued
+      label: Minutes Queued
+      expression: "${redshift_queries.total_time_in_queue}/60"
+      value_format:
+      value_format_name: decimal_1
+    stacking: ''
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: true
+    limit_displayed_rows: false
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    query_timezone: Europe/Dublin
+    show_null_points: true
+    point_style: none
+    interpolation: linear
+    series_types:
+      minutes_queued: area
+    y_axis_labels: [Count, Queued, Minutes Queued]
+    y_axis_orientation: [left, left, right]
+    hidden_series: []
+    hidden_fields: [redshift_queries.total_time_in_queue, redshift_queries.percent_queued]
+    colors: ['palette: Tomato to Steel Blue']
+    series_colors:
+      minutes_queued: "#e0bc5e"
+      redshift_queries.count: "#2f24b5"
+      redshift_queries.count_of_queued: "#d10c04"
+    y_axes: [{label: Count, maxValue: !!null '', minValue: !!null '', orientation: left,
+        showLabels: true, showValues: true, tickDensity: default, tickDensityCustom: 5,
+        type: linear, unpinAxis: false, valueFormat: !!null '', series: [{id: redshift_queries.count,
+            name: Redshift Queries Count, axisId: redshift_queries.count}, {id: redshift_queries.count_of_queued,
+            name: Redshift Queries Count of Queued, axisId: redshift_queries.count_of_queued}]},
+      {label: !!null '', maxValue: 5, minValue: !!null '', orientation: right, showLabels: false,
+        showValues: true, tickDensity: default, tickDensityCustom: 5, type: linear,
+        unpinAxis: false, valueFormat: !!null '', series: [{id: minutes_queued, name: Minutes
+              Queued, axisId: minutes_queued}]}]
+    column_spacing_ratio:
+    column_group_spacing_ratio:
